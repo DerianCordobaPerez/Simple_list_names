@@ -1,24 +1,69 @@
-import {StatusBar} from 'expo-status-bar'
 import React from 'react'
+import {StatusBar} from 'expo-status-bar'
 import {StyleSheet, Text, View, TextInput, Button} from 'react-native'
 
 export default function App() {
-  const [name, setName] = React.useState('')
-  const [names, setNames] = React.useState([])
+  const [person, setPerson] = React.useState({
+    name: '',
+    lastname: '',
+    age: '',
+  })
+
+  const [personArray, setPersonArray] = React.useState([])
+
+  const handleChange = (name, value) => {
+    setPerson({
+      ...person,
+      [name]: value,
+    })
+  }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Add name</Text>
+      <Text style={styles.text}>Add person</Text>
 
       <TextInput
         style={styles.input}
-        value={name}
-        onChangeText={(text) => setName(text)}
+        placeholder="Name"
+        onChangeText={(value) => handleChange('name', value)}
+        value={person.name}
       />
 
-      <Button title="Add" onPress={() => setNames([...names, name])} />
+      <TextInput
+        style={styles.input}
+        placeholder="Lastname"
+        onChangeText={(value) => handleChange('lastname', value)}
+        value={person.lastname}
+      />
 
-      {names.length > 0 && names.map((item) => <Text key={item}>{item}</Text>)}
+      <TextInput
+        style={styles.input}
+        placeholder="Age"
+        onChangeText={(value) => handleChange('age', value)}
+        value={person.age}
+      />
+
+      <Button
+        title="Add person"
+        onPress={() => {
+          setPersonArray([...personArray, person])
+          setPerson({
+            name: '',
+            lastname: '',
+            age: '',
+          })
+        }}
+      />
+
+      <Text style={styles.text}>Persons</Text>
+
+      {personArray.map((person, index) => (
+        <View key={index} style={styles.person}>
+          <Text>{person.name}</Text>
+          <Text>{person.lastname}</Text>
+          <Text>{person.age}</Text>
+        </View>
+      ))}
 
       <StatusBar style="auto" />
     </View>
@@ -41,6 +86,14 @@ const styles = StyleSheet.create({
   },
 
   input: {
+    borderWidth: 1,
+    borderColor: '#000',
+    padding: 10,
+    marginTop: 20,
+    marginBottom: 20,
+  },
+
+  person: {
     borderWidth: 1,
     borderColor: '#000',
     padding: 10,
