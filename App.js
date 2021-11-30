@@ -3,65 +3,65 @@ import {StatusBar} from 'expo-status-bar'
 import {StyleSheet, Text, View, TextInput, Button} from 'react-native'
 
 export default function App() {
-  const [person, setPerson] = React.useState({
-    name: '',
-    lastname: '',
-    age: '',
+  const [persona, setPersona] = React.useState({
+    nombre: '',
+    apellido: '',
+    edad: 0,
   })
 
-  const [personArray, setPersonArray] = React.useState([])
+  const [personasArray, setPersonasArray] = React.useState([])
 
-  const handleChange = (name, value) => {
-    setPerson({
-      ...person,
-      [name]: value,
+  const handleChange = (nombre, valor) => {
+    setPersona({
+      ...persona,
+      [nombre]: valor,
     })
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Add person</Text>
+    <View style={styles.contenedor}>
+      <Text style={styles.texto}>Add person</Text>
 
       <TextInput
         style={styles.input}
-        placeholder="Name"
-        onChangeText={(value) => handleChange('name', value)}
-        value={person.name}
+        placeholder="Nombre"
+        onChangeText={(valor) => handleChange('nombre', valor)}
+        value={persona.nombre}
       />
 
       <TextInput
         style={styles.input}
-        placeholder="Lastname"
-        onChangeText={(value) => handleChange('lastname', value)}
-        value={person.lastname}
+        placeholder="Apellido"
+        onChangeText={(valor) => handleChange('apellido', valor)}
+        value={persona.apellido}
       />
 
       <TextInput
         style={styles.input}
-        placeholder="Age"
-        onChangeText={(value) => handleChange('age', value)}
-        value={person.age}
+        placeholder="Edad"
+        onChangeText={(valor) => handleChange('edad', valor)}
+        value={persona.edad}
       />
 
       <Button
         title="Add person"
         onPress={() => {
-          setPersonArray([...personArray, person])
-          setPerson({
-            name: '',
-            lastname: '',
-            age: '',
+          setPersonasArray([...personasArray, persona])
+          setPersona({
+            nombre: '',
+            apellido: '',
+            edad: 0,
           })
         }}
       />
 
-      <Text style={styles.text}>Persons</Text>
+      <Text style={styles.texto}>Personas</Text>
 
-      {personArray.map((person, index) => (
-        <View key={index} style={styles.person}>
-          <Text>{person.name}</Text>
-          <Text>{person.lastname}</Text>
-          <Text>{person.age}</Text>
+      {personasArray.map((persona, index) => (
+        <View key={index} style={styles.persona}>
+          <Text>{persona.nombre}</Text>
+          <Text>{persona.apellido}</Text>
+          <Text>{persona.edad}</Text>
         </View>
       ))}
 
@@ -71,14 +71,14 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  contenedor: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
 
-  text: {
+  texto: {
     fontSize: 20,
     fontWeight: 'bold',
     marginTop: 20,
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 
-  person: {
+  persona: {
     borderWidth: 1,
     borderColor: '#000',
     padding: 10,
