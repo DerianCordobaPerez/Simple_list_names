@@ -1,67 +1,25 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {StatusBar} from 'expo-status-bar'
-import {StyleSheet, Text, View, TextInput, Button} from 'react-native'
+import {StyleSheet, Text, View} from 'react-native'
 
 export default function App() {
-  const [persona, setPersona] = React.useState({
-    nombre: '',
-    apellido: '',
-    edad: 0,
-  })
-
   const [personasArray, setPersonasArray] = React.useState([])
 
-  const handleChange = (nombre, valor) => {
-    setPersona({
-      ...persona,
-      [nombre]: valor,
-    })
-  }
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then((response) => response.json())
+      .then((data) => setPersonasArray(data))
+  }, [])
 
   return (
     <View style={styles.contenedor}>
-      <Text style={styles.texto}>Add person</Text>
-
-      <TextInput
-        style={styles.input}
-        placeholder="Nombre"
-        onChangeText={(valor) => handleChange('nombre', valor)}
-        value={persona.nombre}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Apellido"
-        onChangeText={(valor) => handleChange('apellido', valor)}
-        value={persona.apellido}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Edad"
-        onChangeText={(valor) => handleChange('edad', valor)}
-        value={persona.edad}
-      />
-
-      <Button
-        title="Add person"
-        onPress={() => {
-          setPersonasArray([...personasArray, persona])
-          setPersona({
-            nombre: '',
-            apellido: '',
-            edad: 0,
-          })
-        }}
-      />
-
       <Text style={styles.texto}>Personas</Text>
 
       {personasArray.map((persona, index) => (
         <View key={index} style={styles.persona}>
-          <Text>{persona.nombre}</Text>
-          <Text>{persona.apellido}</Text>
-          <Text>{persona.edad}</Text>
+          <Text>{persona.name}</Text>
+          <Text>{persona.username}</Text>
+          <Text>{persona.email}</Text>
         </View>
       ))}
 
